@@ -22,8 +22,8 @@
             <div class="col-md-6 text-center caixa-1">
                 <p>Escolha um número para representar sua jogada:</p>
                 <ol class="d-flex flex-wrap gap-5 justify-content-center">
-                    <li>Papel</li>
                     <li>Pedra</li>
+                    <li>Papel</li>
                     <li>Tesoura</li>
                 </ol>
                 <div class="d-flex flex-wrap gap-3">
@@ -38,31 +38,49 @@
             </div>
             <div class="col-md-6 text-center caixa-2">
                 <p>Computador pensou a jogada dele:</p>
-                <span>< SEM IMFORMAÇÕES ></span>
+                <span>
+                    < SEM IMFORMAÇÕES>
+                </span>
             </div>
         </div>
-        <div class="d-flex flex-wrap mt-5">
-            <div class="col-md-6 text-center">
-                <h1>VOCÊ</h1>
+        <div class="caixa-3">
+            <div class="d-flex flex-wrap mt-5 justify-content-center gap-4">
+                <div class="">
+                    <h1 class="user_jog"><span id="pontos_user">(0)</span> VOCÊ</h1>
+                </div>
+                <div>
+                    <h1>X</h1>
+                </div>
+                <div>
+                    <h1 class="computer_jog">COMPUTADOR <span id="pontos_computer">(0)</span></h1>
+                </div>
             </div>
-            <div class="col-md-6 text-center">
-                <h1>COMPUTADOR</h1>
+            <div class="text-center">
+                <div class="text-center">RESULTADO</div>
+                <p class="resultado_do_jogo">< RESULTADO DO JOGO ></p>
             </div>
         </div>
     </section>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 </html>
 <script>
     $(document).ready(function() {
         $('#jogar').click(function() {
+            var jogada = $('#user').val();
             $.ajax({
-                url: 'des_php/jokenpo.php';
-                method: 'post';
-                data: {},
+                url: '../des_php/jokenpo.php',
+                method: 'post',
+                data: {
+                    jogada: jogada
+                },
                 success: function(resp) {
-                    alert(resp)
+                    var datas = resp.split(';')
+                    $('.user_jog').text(datas[0]);
+                    $('.computer_jog').text(datas[1]);
+                    $('#user').val('');
                 }
             })
         })
